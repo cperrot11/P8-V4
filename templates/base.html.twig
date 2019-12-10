@@ -30,7 +30,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">To Do List app</a>
 
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                    <img src="{{ asset('images/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
                 </div>
             </div>
         </nav>
@@ -64,7 +64,7 @@
                     {% endfor %}
 
                     {% block header_title %}{% endblock %}
-                    {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
+                    {% block header_img %}<img class="slide-image" src="{{ asset('images/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
                 </div>
             </div>
 
@@ -91,7 +91,11 @@
 
         </div>
 
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous">
+        </script>
     </body>
 </html>
