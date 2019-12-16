@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+
 use App\Entity\User;
 use App\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Route("/users", name="user_list")
@@ -21,18 +23,22 @@ class UserController extends Controller
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm( UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            $password = $userPasswordEncoder->encodePassword(
+                $user,
+                $form->get('password')->getData()
+                );
             $user->setPassword($password);
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -53,7 +59,7 @@ class UserController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
