@@ -24,6 +24,7 @@ class TaskController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas créer de tâche sans être logué');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
