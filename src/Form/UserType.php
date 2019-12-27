@@ -20,7 +20,7 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent correspondre.',
-                'required' => true,
+                'required' => false,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Tappez le mot de passe à nouveau'],
             ])
@@ -30,7 +30,7 @@ class UserType extends AbstractType
                     'Utilisateur' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN'
                 ],
-                'mapped' => false,
+                'multiple' => true,
                 'expanded' => true
             ]);
         ;

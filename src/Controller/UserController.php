@@ -31,6 +31,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            dd($user);
             $password = $userPasswordEncoder->encodePassword(
                 $user,
                 $form->get('password')->getData()
@@ -53,23 +54,25 @@ class UserController extends AbstractController
      */
     public function editAction(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
+        $old_password = $user->getPassword();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $new_password = $form->get('password');
             //change password
-            if (!$form->get('password')) {
-                $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            }
-            else {
+            if ($new_password!==null) {
                 $password = $userPasswordEncoder->encodePassword(
                 $user,
                 $form->get('password')->getData()
                 );
+                $user->setPassword($password);
             }
-            $user->setPassword($password);
-            $user->setRoles($form->get('roles')->getData());
-
+            else {
+                $user->setPassword($old_password);
+            }
+            //dd($user->getRoles());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

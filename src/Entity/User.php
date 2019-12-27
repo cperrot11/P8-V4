@@ -68,7 +68,7 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getRoles() : array
+    public function getRoles()
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -83,6 +83,7 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+        return $this;
     }
 
     /**
@@ -93,7 +94,7 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword($password): self
     {
         $this->password = $password;
 
