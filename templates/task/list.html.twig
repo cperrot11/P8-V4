@@ -3,13 +3,16 @@
 {% block header_img %}<img class="slide-image" src="{{ asset('images/todolist_content.jpg') }}" alt="todo list">{% endblock %}
 
 {% block body %}
-    <a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
+    <div class="row">
+        <a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
+    </div>
     <div class="row">
         {% for task in tasks %}
         <div class="col-sm-4 col-lg-4 col-md-4">
-            <div class="thumbnail">
+            <div class="thumbnail cp">
                 <div class="caption">
                     <h4 class="pull-right">
+                        <span>({{ task.user.userName }})</span>
                         {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
                     </h4>
                     <h4><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
