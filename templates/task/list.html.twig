@@ -8,11 +8,11 @@
     </div>
     <div class="row">
         {% for task in tasks %}
-        <div class="col-sm-4 col-lg-4 col-md-4">
-            <div class="thumbnail cp">
+        <div class="col-sm-12 col-md-6 col-lg-4 cp-1">
+            <div class="thumbnail">
                 <div class="caption">
                     <h4 class="pull-right">
-                        <span>({{ task.user.userName }})</span>
+                        <span>({{ task.user.userName??'?' }})</span>
                         {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
                     </h4>
                     <h4><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
