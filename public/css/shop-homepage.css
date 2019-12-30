@@ -43,8 +43,11 @@ body {
 .thumbnail {
     padding: 0;
 }
-.cp-1 {
+.cpmb-1 {
     margin-bottom: 1rem ;
+}
+.cpp-1{
+    padding: 15px;
 }
 
 .thumbnail .caption-full {

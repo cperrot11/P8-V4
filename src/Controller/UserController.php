@@ -21,7 +21,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/create", name="user_create")
+     * @Route("/users/create", name="user_create")
      */
     public function createAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
