@@ -85,11 +85,22 @@ class TaskController extends AbstractController
      */
     public function deleteTaskAction(Task $task)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $identique = $task->getUser()==$this->getUser();
+        $anonyme = !$task->getUser();
+        $admin = $this->isGranted('ROLE_ADMIN');
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+        if ($identique|($anonyme and $admin))
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
+        }
+        else
+        {
+            $this->addFlash('error', 'Seul le propriétaire : "'.$task->getUser()->getUsername().'" peut supprimer la tâche !');
+        }
+
 
         return $this->redirectToRoute('task_list');
     }
