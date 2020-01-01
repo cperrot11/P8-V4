@@ -72,7 +72,7 @@ class UserController extends AbstractController
             else {
                 $user->setPassword($old_password);
             }
-            //dd($user->getRoles());
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

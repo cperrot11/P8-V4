@@ -21,6 +21,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
             $rand_user=rand(1,12);
             if ($rand_user>9) {
+                //anonymous user
                 $user = null;
             }
             else {

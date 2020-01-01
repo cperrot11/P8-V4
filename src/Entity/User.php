@@ -11,8 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="Cette adresse email est déjà utilisée.")
+ * @UniqueEntity(fields={"email"}, message = "Cette adresse email est déjà utilisée.")
+ * @UniqueEntity(fields={"username"}, message = "L'utilisateur {{ value }} existe déjà !")
  */
+
 class User implements UserInterface
 {
     /**
@@ -38,6 +40,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotNull(message="Le mot de passe ne peut être null")
      * @Assert\Length(
      *      min = 6,
      *      max = 20,

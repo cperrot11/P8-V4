@@ -41,6 +41,7 @@
             <div class="row">
                 <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
                 {% if app.user %}
+                    <a href="{{ path('user_list') }}" class="btn btn-success">Gérer les utilisateurs</a>
                     <a href="{{ path('app_logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
                 {% endif %}
 
