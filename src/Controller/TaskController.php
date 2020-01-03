@@ -96,10 +96,15 @@ class TaskController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'La tâche a bien été supprimée.');
         }
-        else
+        elseif ($anonyme and !$admin)
+        {
+            $this->addFlash('error', 'Seul les administrateurs peuvent supprimer les tâche "anonymes" !');
+        }
+        elseif (!$identique)
         {
             $this->addFlash('error', 'Seul le propriétaire : "'.$task->getUser()->getUsername().'" peut supprimer la tâche !');
         }
+
 
 
         return $this->redirectToRoute('task_list');

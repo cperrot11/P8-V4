@@ -9,7 +9,6 @@
  * @author Christophe PERROTIN
  * @copyright 2018
  * @license MIT License
- * @link http://wwww.perrotin.eu
  */
 
 namespace App\tests\Entity;
