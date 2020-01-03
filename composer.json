@@ -26,7 +26,6 @@
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
-        "symfony/test-pack": "^1.0",
         "symfony/translation": "4.4.*",
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
@@ -37,7 +36,8 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/debug-pack": "*",
-        "symfony/profiler-pack": "*"
+        "symfony/profiler-pack": "*",
+        "symfony/test-pack": "^1.0"
     },
 
     "config": {
