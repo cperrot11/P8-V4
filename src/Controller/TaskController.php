@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +22,11 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @IsGranted("ROLE_USER")
      */
     public function createAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas créer de tâche sans être logué');
+//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas créer de tâche sans être logué');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
