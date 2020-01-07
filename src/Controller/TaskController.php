@@ -22,11 +22,9 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
-     * @IsGranted("ROLE_USER")
      */
     public function createAction(Request $request)
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous ne pouvez pas créer de tâche sans être logué');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -48,6 +46,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * * @IsGranted("ROLE_USER")
      */
     public function editAction(Task $task, Request $request)
     {
@@ -71,6 +70,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @IsGranted("ROLE_USER")
      */
     public function toggleTaskAction(Task $task)
     {
@@ -84,6 +84,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @IsGranted("ROLE_USER")
      */
     public function deleteTaskAction(Task $task)
     {
@@ -91,7 +92,7 @@ class TaskController extends AbstractController
         $anonyme = !$task->getUser();
         $admin = $this->isGranted('ROLE_ADMIN');
 
-        if ($identique|($anonyme and $admin))
+        if (($identique and !$anonyme)|($anonyme and $admin))
         {
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);
@@ -111,4 +112,5 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('task_list');
     }
+
 }

@@ -15,6 +15,7 @@
 namespace App\Tests\Controller;
 
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -55,20 +56,74 @@ class UserControllerTest extends WebTestCase
         $form['user[password][second]']='123456';
         $form['user[email]']='UserTest1@gmail.com';
         $form['user[roles][0]']->tick();
-        //redirect soon
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect());
-        //redirect ok
-        $crawler = $client->followRedirect();
-        $response = $client->getResponse();
-        $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertContains('Superbe ! L\'utilisateur a bien été ajouté.', $response->getContent());
+        //redirect ok
+        $this->assertTrue($client->getResponse()->isRedirect());
+
+        $crawler = $client->followRedirect();
+        //Message ok
+        $this->assertContains('Superbe', $client->getResponse()->getContent());
     }
 
     public function testEditAction()
     {
+        $newUserEmail = 'admin_jane@symfony.com';
+        $client = static::createClient([],[
+            'PHP_AUTH_USER' => 'admin@gmail.com',
+            'PHP_AUTH_PW'   => '123456']);
+        $crawler = $client->request('GET', '/admin/users/2/edit');
 
+        //test page display
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        //test Form field
+        static::assertSame(1, $crawler->filter('input[name="user[username]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[password][first]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[password][second]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[email]"]')->count());
+        static::assertSame(2, $crawler->filter('input[name="user[roles][]"]')->count());
+
+        $form = $crawler->selectButton('Modifier')->form();
+        $form['user[username]'] = 'user';
+        $form['user[password][first]'] = '123457';
+        $form['user[password][second]'] = '123457';
+        $form['user[email]'] = $newUserEmail;
+        $form['user[roles][0]']->tick();
+        $client->submit($form);
+
+        static::assertSame(302, $client->getResponse()->getStatusCode());
+
+        $crawler = $client->followRedirect();
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertContains('Superbe', $client->getResponse()->getContent());
+
+        /** @var User $user */
+        $user = $client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'email' => $newUserEmail,
+        ]);
+        //test User change Email OK
+        $this->assertNotNull($user);
+        $this->assertSame($newUserEmail, $user->getEmail());
+    }
+
+    /**
+     * @dataProvider getUrlsForAnonymousUsers
+     */
+    public function testAccessDeniedForAnonymousUsers(string $httpMethod, string $url)
+    {
+        $client = static::createClient();
+        $client->request($httpMethod, $url);
+        $response = $client->getResponse();
+        $this->assertResponseRedirects(
+            '/login',
+            Response::HTTP_FOUND,
+            sprintf('The %s secure URL redirects to the login form.', $url)
+        );
+    }
+    public function getUrlsForAnonymousUsers()
+    {
+        yield ['GET', '/admin/users'];
+        yield ['GET', '/admin/users/2/edit'];
     }
 
 }
