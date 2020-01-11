@@ -45,6 +45,7 @@ class UserControllerTest extends WebTestCase
     public function testCreateAction()
     {
         $client = static::createClient();
+        $client->followRedirects();
         $crawler = $client->request('GET','/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
 
@@ -58,12 +59,14 @@ class UserControllerTest extends WebTestCase
         $form['user[roles][0]']->tick();
         $client->submit($form);
 
+//        $crawler = $client->followRedirect();
         //redirect ok
-        $this->assertTrue($client->getResponse()->isRedirect());
-
-        $crawler = $client->followRedirect();
-        //Message ok
-        $this->assertContains('Superbe', $client->getResponse()->getContent());
+        $this->assertResponseRedirects(
+            '/login',
+            Response::HTTP_FOUND,
+            'La redirection est OK'
+        );
+//        $this->assertContains('Superbe', $client->getResponse()->getContent());
     }
 
     public function testEditAction()
