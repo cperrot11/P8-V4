@@ -19,8 +19,8 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
             $content = '<p>'. join($faker->paragraphs(2), '</p><p>').'</p>';
 
-            $rand_user=rand(1,12);
-            if ($rand_user>9) {
+            $rand_user=rand(1,9);
+            if ($a<6) {
                 //anonymous user
                 $user = null;
             }

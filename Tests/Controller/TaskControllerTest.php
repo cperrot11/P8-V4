@@ -15,29 +15,31 @@
 namespace App\Tests\Controller;
 
 
+use App\Controller\BaseController;
 use App\Entity\Task;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TaskControllerTest extends WebTestCase
+
+class TaskControllerTest extends BaseController
 {
     /**
      * @dataProvider getUrlsForAnonymousUsers
      */
-    public  function testActionBlocked(string $httpMethod, string $url)
+    public function testActionBlocked(string $httpMethod, string $url)
     {
         //if the user is not login, redirect te login page
-        $client = static::createClient();
-        $client->request($httpMethod, $url);
+        $this->connect();
+        $this->client->request($httpMethod, $url);
 
-        $crawler = $client->getResponse();
+        $crawler = $this->client->getResponse();
         $this->assertResponseRedirects(
             '/login',
             Response::HTTP_FOUND,
             sprintf('The %s secure URL redirects to the login form.', $url)
         );
 
-        $crawler = $client->followRedirect();
+        $crawler = $this->client->followRedirect();
         // Test if login field exists
         static::assertSame(1, $crawler->filter('input[name="email"]')->count());
         static::assertSame(1, $crawler->filter('input[name="password"]')->count());
@@ -49,33 +51,78 @@ class TaskControllerTest extends WebTestCase
         yield ['GET', '/tasks/2/toggle'];
         yield ['GET', '/tasks/2/delete'];
     }
+
     public function testListAction()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/tasks');
+        $this->connect();
+        $crawler = $this->client->request('GET', '/tasks');
         $this->assertGreaterThan(
             0,
             $crawler->filter('h4')->count(),
             'La liste affiche des tâches.'
         );
     }
+
     public function testCreateAction()
     {
-        $client = static::createClient([],[
-            'PHP_AUTH_USER' => 'admin@gmail.com',
-            'PHP_AUTH_PW'   => '123456']);
-        $client->followRedirects();
-        $crawler = $client->request('GET','/tasks/create');
+        $this->connectUser();
+        $crawler = $this->client->request('GET', '/tasks/create');
         $form = $crawler->selectButton('Ajouter')->form();
 
-        $form['task[title]']='Tache de test';
-        $form['task[content]']='Lorem ipsum test';
+        $form['task[title]'] = 'Tache de test';
+        $form['task[content]'] = 'Lorem ipsum test';
 
-        $crawler= $client->submit($form);
+        $crawler = $this->client->submit($form);
 
-//      dernière tâche ajoutée
+        // Last task added
         $newTask = $crawler->filter('.caption')->last()->filter('div>p')->text();
         $this->assertSame('Lorem ipsum test', $newTask);
     }
 
+    public function testEditAction()
+    {
+        $this->connectAdmin();
+        $crawler = $this->client->request('GET', '/tasks/2/edit');
+        $form = $crawler->selectButton('Modifier')->form();
+
+        $form['task[content]'] = 'Update content';
+        $crawler = $this->client->submit($form);
+
+        // Test if success message is displayed
+        static::assertContains("Superbe ! La tâche a bien été modifiée.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
+    public function testDeleteAnonymTaskWithAdmin()
+    {
+        $this->connectAdmin();
+        $crawler = $this->client->request('GET', '/tasks/3/delete');
+
+        // Test if success message is displayed
+        static::assertContains("Superbe ! La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
+    //Test delete task by bad user
+    public function testDeleteTaskWithBadUser()
+    {
+        $this->connectUser();
+        $crawler = $this->client->request('GET', '/tasks/9/delete');
+
+        // Test if danger message is displayed
+        static::assertContains("Oops ! Seul le propriétaire", $crawler->filter('div.alert.alert-danger')->text());
+    }
+
+    //Test delete task by his author
+    public function testDeleteTaskWithGoodUser()
+    {
+        $this->connectUser();
+        $task = $this->client->getContainer()
+            ->get('doctrine')
+            ->getRepository(Task::class)
+            ->findOneBy(['title' => 'Tache de test']);
+        $lien = '/tasks/' . $task->getId() . '/delete';
+
+        $crawler = $this->client->request('GET', $lien);
+        // Test if delete message is displayed
+        static::assertContains("Superbe ! La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
+    }
 }

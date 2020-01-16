@@ -42,7 +42,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="testOrder">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
@@ -50,6 +50,10 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <exclude>
+                <directory>src/Migrations/</directory>
+                <directory>src/DataFixtures/</directory>
+            </exclude>
         </whitelist>
     </filter>
 

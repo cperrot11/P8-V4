@@ -57,16 +57,10 @@ class UserControllerTest extends WebTestCase
         $form['user[password][second]']='123456';
         $form['user[email]']='UserTest1@gmail.com';
         $form['user[roles][0]']->tick();
-        $client->submit($form);
+        $crawler= $client->submit($form);
 
-//        $crawler = $client->followRedirect();
-        //redirect ok
-        $this->assertResponseRedirects(
-            '/login',
-            Response::HTTP_FOUND,
-            'La redirection est OK'
-        );
-//        $this->assertContains('Superbe', $client->getResponse()->getContent());
+        // Test if success message is displayed
+        static::assertContains("Superbe ! L'utilisateur a bien été ajouté.", $crawler->filter('div.alert.alert-success')->text());
     }
 
     public function testEditAction()
@@ -79,12 +73,6 @@ class UserControllerTest extends WebTestCase
 
         //test page display
         static::assertSame(200, $client->getResponse()->getStatusCode());
-        //test Form field
-        static::assertSame(1, $crawler->filter('input[name="user[username]"]')->count());
-        static::assertSame(1, $crawler->filter('input[name="user[password][first]"]')->count());
-        static::assertSame(1, $crawler->filter('input[name="user[password][second]"]')->count());
-        static::assertSame(1, $crawler->filter('input[name="user[email]"]')->count());
-        static::assertSame(2, $crawler->filter('input[name="user[roles][]"]')->count());
 
         $form = $crawler->selectButton('Modifier')->form();
         $form['user[username]'] = 'user';
