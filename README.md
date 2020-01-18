@@ -15,20 +15,15 @@ To run this project and load all its dependencies on your local machine, you nee
 ## Use "MakeFile" to have a more fun dev :relaxed:
 1. Run `make` in a terminal and discover how to use it in few seconds. 
 2. Use `make begin` to configure all the application in one time.
- That run the following action :
-  | Make command | Resume |
-  |--------------|------- |
-  | coin | Install vendors according to the current composer.lock file |
-  | coup | Update vendors according to the composer.json file |
+ That run the following action :     
+  | Make command |  Resume                                                    |
+  |--------------|------------------------------------------------------------|
+  | coin | Install vendors according to the current composer.lock file        |
+  |--------------|------------------------------------------------------------|
+  | coup | Update vendors according to the composer.json file                 |
+  |--------------|------------------------------------------------------------|
   | indb | Create database, apply the migration and upload the data fixtures. |
-     
-  | column 1 | column 2 |
-  |----------|----------|
-  | value    | * value 1|
-  |          | * value 2|
-  |----------|----------|
-  | value    | * value 1|
-  |          | * value 2|   
+  
     Execute command line `php bin/console composer update`.
 4. Apply your database configuration in  `snowtricks/config/ini.php`.
 5. Dont forget to configure your e-mail setting with this line in the ".env" file
