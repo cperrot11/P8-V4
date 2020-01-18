@@ -9,8 +9,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+//* @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity()
  * @UniqueEntity(fields={"email"}, message = "Cette adresse email est déjà utilisée.")
  * @UniqueEntity(fields={"username"}, message = "L'utilisateur {{ value }} existe déjà !")
  */

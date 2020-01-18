@@ -15,38 +15,37 @@
 namespace App\Tests\Controller;
 
 
+use App\Controller\BaseController;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class UserControllerTest extends WebTestCase
+class UserControllerTest extends BaseController
 {
     public function testListActionBlocked()
     {
-        $client = static::createClient();
-        $client->request('GET','/admin/users');
-        $response = $client->getResponse();
+        $this->connect();
+        $this->client->request('GET','/admin/users');
+        $response = $this->client->getResponse();
 
-        //refused 302 for anonymous
+        //refused ->302 for anonymous
         $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
     }
     public function testListActionOK()
     {
-        $client = static::createClient([],[
-            'PHP_AUTH_USER' => 'admin@gmail.com',
-            'PHP_AUTH_PW'   => '123456']);
-        $client->request('GET','/admin/users');
-        $response = $client->getResponse();
+        $this->connectAdmin();
+        $this->client->request('GET','/admin/users');
+        $response = $this->client->getResponse();
         //accepted for ROLE_ADMIN
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testCreateAction()
     {
-        $client = static::createClient();
-        $client->followRedirects();
-        $crawler = $client->request('GET','/users/create');
+        $this->connect();
+        $this->client->followRedirects();
+        $crawler = $this->client->request('GET','/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
 
         // select the form that contains this button
@@ -57,42 +56,47 @@ class UserControllerTest extends WebTestCase
         $form['user[password][second]']='123456';
         $form['user[email]']='UserTest1@gmail.com';
         $form['user[roles][0]']->tick();
-        $crawler= $client->submit($form);
+        $crawler= $this->client->submit($form);
+
 
         // Test if success message is displayed
         static::assertContains("Superbe ! L'utilisateur a bien été ajouté.", $crawler->filter('div.alert.alert-success')->text());
+        // Let the Database clean
+        $this->deleteUser('UserTest1');
     }
 
     public function testEditAction()
     {
+        $this->connectAdmin();
+        /** @var User $user */
+        $user = $this->client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'id' => 2,
+        ]);
         $newUserEmail = 'admin_jane@symfony.com';
-        $client = static::createClient([],[
-            'PHP_AUTH_USER' => 'admin@gmail.com',
-            'PHP_AUTH_PW'   => '123456']);
-        $crawler = $client->request('GET', '/admin/users/2/edit');
+
+        $crawler = $this->client->request('GET', '/admin/users/2/edit');
 
         //test page display
-        static::assertSame(200, $client->getResponse()->getStatusCode());
+        $response = $this->client->getResponse();
+        static::assertSame(200, $response->getStatusCode());
 
         $form = $crawler->selectButton('Modifier')->form();
-        $form['user[username]'] = 'user';
-        $form['user[password][first]'] = '123457';
-        $form['user[password][second]'] = '123457';
+        $form['user[username]'] = $user->getUsername();
+        $form['user[password][first]'] = '123456';
+        $form['user[password][second]'] = '123456';
         $form['user[email]'] = $newUserEmail;
         $form['user[roles][0]']->tick();
-        $client->submit($form);
+        $this->client->submit($form);
 
-        static::assertSame(302, $client->getResponse()->getStatusCode());
+        $response = $this->client->getResponse();
+        static::assertSame(200, $response->getStatusCode());
+        $this->assertContains('Superbe', $response->getContent());
 
-        $crawler = $client->followRedirect();
-        static::assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Superbe', $client->getResponse()->getContent());
 
-        /** @var User $user */
-        $user = $client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
-            'email' => $newUserEmail,
-        ]);
         //test User change Email OK
+        $user = $this->client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'id' => 2,
+        ]);
         $this->assertNotNull($user);
         $this->assertSame($newUserEmail, $user->getEmail());
     }
@@ -102,9 +106,9 @@ class UserControllerTest extends WebTestCase
      */
     public function testAccessDeniedForAnonymousUsers(string $httpMethod, string $url)
     {
-        $client = static::createClient();
-        $client->request($httpMethod, $url);
-        $response = $client->getResponse();
+        $this->connect();
+        $this->client->request($httpMethod, $url);
+        $response = $this->client->getResponse();
         $this->assertResponseRedirects(
             '/login',
             Response::HTTP_FOUND,

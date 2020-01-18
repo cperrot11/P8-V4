@@ -15,6 +15,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Task;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BaseController extends WebTestCase
@@ -41,5 +43,23 @@ class BaseController extends WebTestCase
             'PHP_AUTH_USER' => 'user@gmail.com',
             'PHP_AUTH_PW' => '123456']);
         $this->client->followRedirects();
+    }
+
+    public function deleteUser(string $userName)
+    {
+        $user = $this->client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'username' => $userName,
+        ]);
+        $entityManager = $this->client->getContainer()->get('doctrine')->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+    }
+
+    public function firstTask()
+    {
+        $myTask = $this->client->getContainer()->get('doctrine')->getRepository(Task::class)->findOneBy([
+            'user' => null,
+        ]);
+        return $myTask->getId();
     }
 }

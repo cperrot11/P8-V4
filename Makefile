@@ -25,10 +25,11 @@ cacl: ## Clear the cache.
 capu: ## Purge cache and logs
 	rm -rf var/cache/* var/logs/*
 
-seon: symfony ## Serve the application with HTTPS support
-	$(SYMFONY) serve -d
+seon:  ## Serve the application with HTTPS support
+	$(SYMFONY) server:ca:install
+	$(SYMFONY) server:start
 
-seof: symfony ## Stop the web server
+seof:  ## Stop the web server
 	$(SYMFONY) server:stop
 
 
@@ -50,6 +51,6 @@ tefu:  ## run the functionals tests
 	$(TEST) --filter UserControllerTest
 	$(TEST) --filter TaskControllerTest
 
-teco: reload-db-test ## Run the coverage test
+teco: ## Run the coverage test
 	rm -rf var/data/*
 	$(TEST) --coverage-html var/data

@@ -42,8 +42,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="testOrder">
-            <directory>tests</directory>
+        <testsuite name="">
+            <directory>Tests</directory>
         </testsuite>
     </testsuites>
 

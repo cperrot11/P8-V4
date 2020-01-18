@@ -30,9 +30,10 @@ class TaskControllerTest extends BaseController
     {
         //if the user is not login, redirect te login page
         $this->connect();
-        $this->client->request($httpMethod, $url);
 
-        $crawler = $this->client->getResponse();
+        $this->client->request($httpMethod, $url);
+        $this->client->followRedirects();
+
         $this->assertResponseRedirects(
             '/login',
             Response::HTTP_FOUND,
@@ -95,7 +96,9 @@ class TaskControllerTest extends BaseController
     public function testDeleteAnonymTaskWithAdmin()
     {
         $this->connectAdmin();
-        $crawler = $this->client->request('GET', '/tasks/3/delete');
+        // Look for the first anonym task
+        $id = $this->firstTask();
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
 
         // Test if success message is displayed
         static::assertContains("Superbe ! La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
