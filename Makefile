@@ -6,7 +6,7 @@ SYMFONY  = symfony
 
 .DEFAULT_GOAL := help
 
-.PHONY: help reload-db-test coverage testfunc testcov
+.PHONY: help reload-db-test coverage te tedb tefu teun cace capu indb
 
 help:  ## Outputs this help screen
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -17,6 +17,8 @@ coin: composer.lock ## Install vendors according to the current composer.lock fi
 
 coup: composer.json ## Update vendors according to the composer.json file
 	$(COMPOSER) update
+
+begin: coin coup indb ##Install & update dependency, initialise the database and the datafixtures
 
 ## —— Symfony ———————————————————————————————————————————————————————————————
 cacl: ## Clear the cache.
@@ -32,8 +34,13 @@ seon:  ## Serve the application with HTTPS support
 seof:  ## Stop the web server
 	$(SYMFONY) server:stop
 
-
 ## ——  Database  ————————————————————————————————————————————————————————————
+indb: ## Instal database and fixtures for production
+	$(CONSOLE) doctrine:database:drop --force --env=prod
+	$(CONSOLE) doctrine:database:create --if-not-exists --env=prod
+	$(CONSOLE) doctrine:migration:migrate --no-interaction --env=prod
+	$(CONSOLE) doctrine:fixture:load --no-interaction --env=prod
+
 tedb: ## Instal database and fixtures for test
 	$(CONSOLE) doctrine:database:drop --force --env=test
 	$(CONSOLE) doctrine:database:create --if-not-exists --env=test
@@ -52,5 +59,5 @@ tefu:  ## run the functionals tests
 	$(TEST) --filter TaskControllerTest
 
 teco: ## Run the coverage test
-	rm -rf var/data/*
-	$(TEST) --coverage-html var/data
+	rm -rf doc/CodeCoverage/*
+	$(TEST) --coverage-html doc/CodeCoverage

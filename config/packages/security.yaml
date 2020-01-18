@@ -16,12 +16,12 @@ security:
             security: false
         main:
             anonymous: lazy
-            logout:
-                path: app_logout
-                target: homepage
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                target: homepage
             http_basic: ~
 
             # activate different ways to authenticate
