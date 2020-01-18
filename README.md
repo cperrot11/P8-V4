@@ -22,6 +22,13 @@ To run this project and load all its dependencies on your local machine, you nee
   | coup | Update vendors according to the composer.json file |
   | indb | Create database, apply the migration and upload the data fixtures. |
      
+  | column 1 | column 2 |
+  |----------|----------|
+  | value    | * value 1|
+  |          | * value 2|
+  |----------|----------|
+  | value    | * value 1|
+  |          | * value 2|   
     Execute command line `php bin/console composer update`.
 4. Apply your database configuration in  `snowtricks/config/ini.php`.
 5. Dont forget to configure your e-mail setting with this line in the ".env" file
