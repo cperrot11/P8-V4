@@ -2,9 +2,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/ca3a4b5dce0ceac5abf8/maintainability)](https://codeclimate.com/github/cperrot11/OC-P6-SnowTrick/maintainability)
 
 ## Introduction
-This project goal is to upgrade an existing application. Implementation of new features, correct some bugs and at the end implement automated tests.
-The ToDo & Co application allows users to enter and manage tasks. :memo:
-The administrator can delete tasks and manage users.:passport_control:
+This project goal is to upgrade an existing application. Implementation of new features, correct some bugs and at the end implement automated tests.  
+The ToDo & Co application allows users to enter and manage tasks. :memo:  
+The administrator can delete tasks and manage users.:passport_control:  
 It's the 8th OpenClassRooms [PHP/Symfony Developer](https://openclassrooms.com/fr/paths/59-developpeur-dapplication-php-symfony) project. 
 
 ## Installation
@@ -16,8 +16,8 @@ To run this project and load all its dependencies on your local machine, you nee
 
 ## Use "MakeFile" to have a more fun dev :relaxed:
 1. Run `make` in a terminal and discover how to use it in few seconds. 
-2. Use `make begin` to configure all the application in one time.
- That run the following action :     
+2. Use `make begin` to configure all the application in one time.  
+That run the following action :     
     * `make coin` -> Install vendors according to the current composer.lock file
     * `make coup` -> Update vendors according to the composer.json file
     * `make indb` -> Create database, apply the migrations and upload the data fixtures
@@ -26,7 +26,7 @@ To run this project and load all its dependencies on your local machine, you nee
     
 ## Your project is ready to be run!
 ##### I can hear you saying: "Wait... I don't want to create task and user one by one...". Don't worry!
-##### login : **admin@gmail.com**
+##### login : **admin@gmail.com**  
 ##### pass : **123456**
 
 ## Technicals documentations
