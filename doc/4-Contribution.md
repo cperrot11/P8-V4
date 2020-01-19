@@ -1,13 +1,13 @@
-﻿# To contribute to the project
+﻿# To contribute with the project
 
 ## Follow the steps
 
 * [Fork](https://help.github.com/articles/fork-a-repo/) the github repository.
 `https://github.com/cperrot11/P8-V4.git`
-* Refer to the readme file [README.md](https://github.com/cperrot11/P8-V4/blob/5-TechDoc/README.md) for install the project.
-* Add a new branch for your functionality and ckeckout it.
+* Refer to [README.md](https://github.com/cperrot11/P8-V4/blob/5-TechDoc/README.md) file for install the project.
+* Add a new branch for your functionality and ckeckout on it.
 * Code as well as posible your idea or bugfix. :muscle:
-* Add and run your unit test and functional ones.
+* finally run your unit test and functional ones.
 * Commit and push your your code. :running:
 
 ## Open a Pull Request
