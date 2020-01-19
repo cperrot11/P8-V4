@@ -28,7 +28,7 @@ To run this project and load all its dependencies on your local machine, you nee
 ##### pass : **123456**
 
 ## Technicals documentations
- * [Authentification] (doc/1-Authentification.pdf) -> Describe how authentication works 
- * [Quality audit] (doc/2-Quality.pdf) -> Measures the technical performance of the application
- * [Test coverage] (doc/CodeCoverage/index.html) -> Result over than 40 tests on the code
- * [Contribution] (doc/3-Contribution.md) -> Help us to improve the program :two_men_holding_hands:
+ * [Authentification](doc/1-Authentification.pdf) -> Describe how authentication works 
+ * [Quality audit](doc/2-Quality.pdf) -> Measures the technical performance of the application
+ * [Test coverage](doc/CodeCoverage/index.html) -> Result over than 40 tests on the code
+ * [Contribution](doc/3-Contribution.md) -> Help us to improve the program :two_men_holding_hands:
