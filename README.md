@@ -20,7 +20,7 @@ To run this project and load all its dependencies on your local machine, you nee
     * `make coup` -> Update vendors according to the composer.json file
     * `make indb` -> Create database, apply the migrations and upload the data fixtures
   
-*Nb : Under Windows install cygdrive to be able to enjoy MakeFile benefit*     
+*Nb : Under Windows install [cygdrive](https://cygwin.com/) to be able to enjoy MakeFile benefit*     
     
 ## Your project is ready to be run!
 ##### I can hear you saying: "Wait... I don't want to create task and user one by one...". Don't worry!
