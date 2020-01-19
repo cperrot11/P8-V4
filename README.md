@@ -16,27 +16,14 @@ To run this project and load all its dependencies on your local machine, you nee
 1. Run `make` in a terminal and discover how to use it in few seconds. 
 2. Use `make begin` to configure all the application in one time.
  That run the following action :     
-  | Make command |  Resume                                                    |
-  |------------- | ---------------------------------------------------------- |
-  | coin | Install vendors according to the current composer.lock file        |
-  |------------- | ---------------------------------------------------------- |
-  | coup | Update vendors according to the composer.json file                 |
-  |--------------|------------------------------------------------------------|
-  | indb | Create database, apply the migration and upload the data fixtures. |
+    * coin -> Install vendors according to the current composer.lock file
+    * coup -> Update vendors according to the composer.json file
+    * indb -> Create database, apply the migrations and upload the data fixtures
   
-    Execute command line `php bin/console composer update`.
-    | column 1 | column 2 |
-    |------------|----------|
-    | value | <ul><li>value 1</li><li>value 2</li></ul> |
-    | value | <ul><li>value 1</li><li>value 2</li></ul> |
-    Content in the first column | Content in the second column
-4. Apply your database configuration in  `snowtricks/config/ini.php`.
-5. Dont forget to configure your e-mail setting with this line in the ".env" file
-MAILER_URL=smtp://yourprovider:587?username=yourlogin&password=yourPasswor
-
+*Nb : Under Windows install cygdrive to be able to enjoy MakeFile benefit*     
+    
 ##### Your project is ready to be run!
-##### I can hear you saying: "Wait... I don't want to create families and tricks one by one...". Don't worry!
-
-6. Run `php bin/console doctrine:fixture:load` and wait until it's done. Now you have a website full of tricks, comments and users!
-7. Enjoy!
+##### I can hear you saying: "Wait... I don't want to create task and user one by one...". Don't worry!
+##### login : **admin@gmail.com**
+##### pass : **123456**
 
