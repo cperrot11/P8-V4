@@ -3,6 +3,8 @@
 
 ## Introduction
 This project goal is to upgrade an existing application. Implementation of new features, correct some bugs and at the end implement automated tests.
+The ToDo & Co application allows users to enter and manage tasks. :memo:
+The administrator can delete tasks and manage users.:passport_control:
 It's the 8th OpenClassRooms [PHP/Symfony Developer](https://openclassrooms.com/fr/paths/59-developpeur-dapplication-php-symfony) project. 
 
 ## Installation
