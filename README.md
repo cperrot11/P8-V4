@@ -1,8 +1,8 @@
 # OC-P8-ToDo&Co
-[![Maintainability](https://api.codeclimate.com/v1/badges/ca3a4b5dce0ceac5abf8/maintainability)](https://codeclimate.com/github/cperrot11/OC-P6-SnowTrick/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bbc25fccf58959f4dda8/maintainability)](https://codeclimate.com/github/cperrot11/P8-V4/maintainability)
 
 ## Introduction
-This project goal is to upgrade an existing application. Implementation of new features, correct some bugs and at the end implement automated tests.  
+This project's goal is to upgrade an existing application. Implementation of new features, correct some bugs and at the end implement automated tests.  
 The ToDo & Co application allows users to enter and manage tasks. :memo:  
 The administrator can delete tasks and manage users.:passport_control:  
 It's the 8th OpenClassRooms [PHP/Symfony Developer](https://openclassrooms.com/fr/paths/59-developpeur-dapplication-php-symfony) project. 
