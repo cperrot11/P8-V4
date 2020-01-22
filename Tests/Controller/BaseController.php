@@ -12,7 +12,7 @@
  * @link http://wwww.perrotin.eu
  */
 
-namespace App\Controller;
+namespace App\Tests\Controller;
 
 
 use App\Entity\Task;

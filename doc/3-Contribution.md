@@ -5,7 +5,7 @@
 * [Fork](https://help.github.com/articles/fork-a-repo/) the github repository.
 `https://github.com/cperrot11/P8-V4.git`
 * Refer to [README.md](https://github.com/cperrot11/P8-V4/blob/5-TechDoc/README.md) file for install the project.
-* Add a new branch for your functionality and ckeckout on it.
+* Add a new branch for your functionality and checkout on it.
 * Code as well as posible your idea or bugfix. :muscle:
 * finally run your unit test and functional ones.
 * Commit and push your your code. :running:
@@ -13,9 +13,8 @@
 ## Open a Pull Request
 
 1. Submit your Pull Request
-2. Check the result of the Codacy analysis for your code
-3. Follow tour test with Travis CI
-4. Wait for the chief developer to merge the Pull Request :cop:
+2. Check the result of the Codeclimate analysis for your code
+3. Wait for the chief developer to merge the Pull Request :cop:
 
 ## Please respect the development standards
 

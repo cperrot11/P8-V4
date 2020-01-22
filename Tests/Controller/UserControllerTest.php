@@ -15,7 +15,6 @@
 namespace App\Tests\Controller;
 
 
-use App\Controller\BaseController;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
