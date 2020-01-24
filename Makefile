@@ -31,7 +31,7 @@ seon:  ## Serve the application with HTTPS support
 	$(SYMFONY) server:ca:install
 	$(SYMFONY) server:start
 
-seof:  ## Stop the web server
+seof:  ## Stop the web serve/
 	$(SYMFONY) server:stop
 
 ## ——  Database  ————————————————————————————————————————————————————————————

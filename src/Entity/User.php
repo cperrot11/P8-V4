@@ -42,9 +42,8 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotNull(message="Le mot de passe ne peut être null")
      * @Assert\Length(
-     *      min = 6,
+     *      min = 4,
      *      max = 20,
      *      minMessage = "Votre mot de passe doit être au moins de {{ limit }} caracteres.",
      *      maxMessage = "Votre mot de passe doit être au plus de {{ limit }} caracteres."

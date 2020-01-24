@@ -16,6 +16,7 @@ namespace App\Tests\Controller;
 
 
 use App\Entity\User;
+use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -64,7 +65,7 @@ class UserControllerTest extends BaseController
         $this->deleteUser('UserTest1');
     }
 
-    public function testEditAction()
+    public function testEditActionWithPass()
     {
         $this->connectAdmin();
         /** @var User $user */
@@ -83,6 +84,7 @@ class UserControllerTest extends BaseController
         $form['user[username]'] = $user->getUsername();
         $form['user[password][first]'] = '123456';
         $form['user[password][second]'] = '123456';
+
         $form['user[email]'] = $newUserEmail;
         $form['user[roles][0]']->tick();
         $this->client->submit($form);
@@ -99,6 +101,42 @@ class UserControllerTest extends BaseController
         $this->assertNotNull($user);
         $this->assertSame($newUserEmail, $user->getEmail());
     }
+
+    public function testEditActionNoPass()
+    {
+        $this->connectAdmin();
+        /** @var User $user */
+        $user = $this->client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'id' => 2,
+        ]);
+        $newUserEmail = 'admin_jane@symfony.com';
+
+        $crawler = $this->client->request('GET', '/admin/users/2/edit');
+
+        //test page display
+        $response = $this->client->getResponse();
+        static::assertSame(200, $response->getStatusCode());
+
+        $form = $crawler->selectButton('Modifier')->form();
+        $form['user[username]'] = $user->getUsername();
+
+        $form['user[email]'] = $newUserEmail;
+        $form['user[roles][0]']->tick();
+        $this->client->submit($form);
+
+        $response = $this->client->getResponse();
+        static::assertSame(200, $response->getStatusCode());
+        $this->assertContains('Superbe', $response->getContent());
+
+
+        //test User change Email OK
+        $user = $this->client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'id' => 2,
+        ]);
+        $this->assertNotNull($user);
+        $this->assertSame($newUserEmail, $user->getEmail());
+    }
+
 
     /**
      * @dataProvider getUrlsForAnonymousUsers

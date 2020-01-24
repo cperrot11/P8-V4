@@ -15,6 +15,7 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -91,6 +92,16 @@ class TaskControllerTest extends BaseController
         static::assertContains("Superbe ! La tâche a bien été modifiée.", $crawler->filter('div.alert.alert-success')->text());
     }
 
+    public function testToggleTaskAction()
+    {
+        $this->connectAdmin();
+        $id = $this->firstTask();
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/toggle');
+
+        // Test if success message is displayed
+        static::assertContains("a bien été marquée comme faite.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
     public function testDeleteAnonymTaskWithAdmin()
     {
         $this->connectAdmin();
@@ -100,6 +111,17 @@ class TaskControllerTest extends BaseController
 
         // Test if success message is displayed
         static::assertContains("Superbe ! La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
+    public function testDeleteAnonymTaskWithUser()
+    {
+        $this->connectUser();
+        // Look for the first anonym task
+        $id = $this->firstTask();
+        $crawler = $this->client->request('GET', '/tasks/'.$id.'/delete');
+
+        // Test if success message is displayed
+        static::assertContains("Seul les administrateurs peuvent supprimer les tâche \"anonymes\" !", $crawler->filter('div.alert.alert-danger')->text());
     }
 
     //Test delete task by bad user
@@ -126,4 +148,27 @@ class TaskControllerTest extends BaseController
         // Test if delete message is displayed
         static::assertContains("Superbe ! La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
     }
+
+    public function testGetTask()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/tasks');
+        $user = $client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy([
+            'id' => 2,
+        ]);
+        $nb = $user->getTasks()->count();
+        $this->assertIsInt($nb);
+    }
+
+    public function testAddTask()
+    {
+
+    }
+
+    public function testRemoveTask()
+    {
+
+    }
+
+
 }
