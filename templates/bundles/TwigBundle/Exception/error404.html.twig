@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block header_img %}{% endblock %}
+
+{% block header_title %}<h1>Page non trouvée</h1>{% endblock %}
+
+{% block body %}
+    <div class="alert alert-warning" role="alert">
+        <h3>La page que vous demandez n'a pas été trouvée.</h3>
+    </div>
+    <a href="{{ path('homepage') }}" class="btn btn-warning pull-right">Accueil</a>
+{% endblock %}

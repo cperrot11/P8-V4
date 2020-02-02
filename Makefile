@@ -22,7 +22,7 @@ begin: coin coup indb ##Install & update dependency, initialise the database and
 
 ## —— Symfony ———————————————————————————————————————————————————————————————
 cacl: ## Clear the cache.
-	$(SYMFONY) c:c
+	$(CONSOLE) c:c
 
 capu: ## Purge cache and logs
 	rm -rf var/cache/* var/logs/*
@@ -38,8 +38,7 @@ seof:  ## Stop the web serve/
 indb: ## Instal database and fixtures for production
 	$(CONSOLE) doctrine:database:drop --force --env=prod
 	$(CONSOLE) doctrine:database:create --if-not-exists --env=prod
-	$(CONSOLE) doctrine:migration:migrate --no-interaction --env=prod
-	$(CONSOLE) doctrine:fixture:load --no-interaction --env=prod
+	$(CONSOLE) doctrine:schema:create --env=prod
 
 tedb: ## Instal database and fixtures for test
 	$(CONSOLE) doctrine:database:drop --force --env=test

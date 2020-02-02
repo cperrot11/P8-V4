@@ -160,15 +160,4 @@ class TaskControllerTest extends BaseController
         $this->assertIsInt($nb);
     }
 
-    public function testAddTask()
-    {
-
-    }
-
-    public function testRemoveTask()
-    {
-
-    }
-
-
 }

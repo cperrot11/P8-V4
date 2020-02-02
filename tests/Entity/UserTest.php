@@ -13,12 +13,12 @@
 
 namespace App\tests\Entity;
 
+use App\Entity\Task;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
-
     public function testGetId()
     {
         $user = new User();
@@ -65,7 +65,18 @@ class UserTest extends TestCase
     {
         $user = new User();
         static::assertEquals($user->getSalt(), null);
-
     }
+    public function testTasks()
+    {
+        $user = new User();
+        $task = new Task();
+        $user->addTask($task);
+        static::assertEquals(1,count($user->getTasks()));
+
+        $user->removeTask($task);
+        static::assertEquals(0,count($user->getTasks()));
+    }
+
+
 
 }

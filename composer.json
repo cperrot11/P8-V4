@@ -6,7 +6,6 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "fzaninotto/faker": "^1.9",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/dependency-injection": "4.4.*",
@@ -15,16 +14,12 @@
         "symfony/flex": "^1.3.1",
         "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
-        "symfony/http-client": "4.4.*",
-        "symfony/intl": "4.4.*",
-        "symfony/mailer": "4.4.*",
-        "symfony/maker-bundle": "^1.14",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
-        "symfony/translation": "4.4.*",
+        "symfony/test-pack": "^1.0",
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
@@ -34,17 +29,21 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.3",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fzaninotto/faker": "^1.9",
         "phpunit/phpunit": "^7.5",
         "symfony/debug-pack": "*",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "^1.0"
+        "symfony/maker-bundle": "^1.14",
+        "symfony/phpunit-bridge": "^5.0",
+        "symfony/profiler-pack": "*"
     },
 
     "config": {
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "classmap-authoritative": true
     },
     "autoload": {
         "psr-4": {
