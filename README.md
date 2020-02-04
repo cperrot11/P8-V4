@@ -31,6 +31,6 @@ That run the following action :
 
 ## Technicals documentations
  * [Authentification](doc/1-Authentification.pdf) -> Describe how authentication works 
- * [Quality audit](doc/2-Quality.pdf) -> Measures the technical performance of the application
+ * [Quality audit](doc/3-Quality.pdf) -> Measures the technical performance of the application
  * [Test coverage](doc/CodeCoverage/index.html) -> Result over than 40 tests on the code
- * [Contribution](doc/3-Contribution.md) -> Help us to improve the program :two_men_holding_hands:
+ * [Contribution](doc/2-Contribution.md) -> Help us to improve the program :two_men_holding_hands:
